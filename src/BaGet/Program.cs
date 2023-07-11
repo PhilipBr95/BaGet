@@ -1,12 +1,15 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using BaGet.Core;
 using BaGet.Web;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace BaGet
 {
@@ -56,9 +59,10 @@ namespace BaGet
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)
-        {
+        {            
             return Host
                 .CreateDefaultBuilder(args)
+                .UseWindowsService()                
                 .ConfigureAppConfiguration((ctx, config) =>
                 {
                     var root = Environment.GetEnvironmentVariable("BAGET_CONFIG_ROOT");
